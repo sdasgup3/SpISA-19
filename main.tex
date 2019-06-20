@@ -31,7 +31,7 @@
 \ccsdesc[100]{General and reference~General literature}
 \ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
 
-\keywords{Dummy keyword}%TODO mandatory; please add comma-separated list of keywords
+\keywords{\ISA, ISA specification, Formal Semantics}%TODO mandatory; please add comma-separated list of keywords
 
 \category{}%optional, e.g. invited paper
 
@@ -70,12 +70,29 @@
 
 %TODO mandatory: add short abstract of the document
 \begin{abstract}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent convallis orci arcu, eu mollis dolor. Aliquam eleifend suscipit lacinia. Maecenas quam mi, porta ut lacinia sed, convallis ac dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. 
+    The \ISA instruction set architecture (ISA) is one of the
+    most complex and widely used ISAs on servers and desktops,
+    and ensuring the correctness of the x86-64 binary code is
+    important. A formal semantics of \ISA is required for formal reasoning
+    about binary code which is one of the strongest ways to ensure
+    its correctness. 
+    %Completely formalizing
+    %the semantics of x86-64, however, is extremely challenging
+    %especially due to the complexity and the sheer number of
+    %instructions that are informally specified, using a mixture of prose and pseudocode, in thousands of pages in the \emph{Intel reference manual}. 
+    %%
+    %Despite the challenges, we formalized, in our previous work, the semantics of most of the user-level instruction using language semantic engineering framework \K. 
+    In this work, we present the ongoing work on augmenting the capability of the formalized semantics by formalizing the instruction decoder in \K. Also, we highlight  the engineering effort in improving the performance of the interpreter derived right from the semantics. 
+    \revisit{TODO}
 \end{abstract}
 
-\section{Typesetting instructions -- Summary}
-\label{sec:typesetting-summary}
-Exple: ~\cite{DBLP:journals/cacm/Knuth74}
+\section{Introduction}
+\label{sec:intro}
+x86-64 being one of the most complex ISAs and widely used in servers and desktop, ensuring the correctness of the program written in binary is extremely important. A formal semantics of x86-64 is imperative for formal reasoning about binary code which is  one of the strongest ways to ensure it's correctness. A formal semantic of the ISA allows direct reasoning about the binary code which is at times more desirable than the source level analysis. For example, in case of legacy software, when the source code is missing, or malware analysis (e.g. finding CFI attacks using gadgets), the direct binary analysis seems to be the only viable option.  Also, often times it is not desirable to add the compiler in the trusted base because, due to presence of compiler bugs or some aggressive optimization that compiler does in the presence of undefined behaviour, there might not be any guarantee that the analysis results that we gather at the source level  can be applied faithfully to the binary code.  
+
+Completely formalizing the semantics of x86-64, however, is extremely challenging especially due to the complexity and the sheer number of instructions that are informally specified, using a mixture of prose and pseudocode, in thousands of pages in the \emph{Intel reference manual}. 
+%%
+Despite the challenges, we witnessed the heroic effort~\cite{Dasgupta:2019} in formalizing the semantics of most of the user-level instruction using language semantic engineering framework \K. However, the developed semantics is for the assembly language notation of the binary program and limited in the sense that any binary analysis using that formalism require, as a prerequisite, converting the binary to the supported mnemonic notation using an off-the-shelf disassembler. Such a requirement add the disassembler in the trusted computing base.  
 
 
 %%
@@ -84,6 +101,6 @@ Exple: ~\cite{DBLP:journals/cacm/Knuth74}
 
 %% Please use bibtex, 
 
-\bibliography{lipics-v2019-sample-article}
+\bibliography{bibs/references.bib,bibs/modeling-X86-semantics.bib,bibs/bugs.bib,bibs/k.bib}
 
 \end{document}
