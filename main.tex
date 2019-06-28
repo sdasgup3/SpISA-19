@@ -72,25 +72,24 @@
 \begin{abstract}
     The \ISA instruction set architecture being one of the
     most complex and widely used ISAs,  ensuring the correctness of the x86-64 binary code is
-    important. One of the strongest ways to ensure that is to define a  formal semantics of \ISA language.
-    %Completely formalizing
+    important. One of the strongest ways to ensure that is to define a  formal semantics of \ISA language. In this work, we present the ongoing work in augmenting the capability of an existing \ISA formal semantics, with the most complete user-level instruction support, by formalizing the instruction decoder and thereby allowing direct analysis of binary code.
+     %Completely formalizing
     %the semantics of x86-64, however, is extremely challenging
     %especially due to the complexity and the sheer number of
     %instructions that are informally specified, using a mixture of prose and pseudocode, in thousands of pages in the \emph{Intel reference manual}. 
     %%
     %Despite the challenges, we formalized, in our previous work, the semantics of most of the user-level instruction using language semantic engineering framework \K. 
-    In this work, we present the ongoing work in augmenting the capability of an existing \ISA formal semantics, with the most complete user-level instruction support, by formalizing the instruction decoder and thereby allowing direct analysis of binary code.
     % Also, we highlight  the engineering effort in improving the performance of the interpreter derived right from the semantics. 
     %\revisit{TODO}
 \end{abstract}
 
 \section{Introduction}
 \label{sec:intro}
-x86-64 being one of the most complex ISAs and widely used in servers and desktop, ensuring the correctness of the program written in binary is extremely important. A formal semantics of x86-64 is imperative for formal reasoning about binary code which is  one of the strongest ways to ensure it's correctness. A formal semantic of the ISA allows direct reasoning about the binary code which is at times more desirable than the source level analysis. For example, in case of legacy software, when the source code is missing, or malware analysis (e.g. finding CFI attacks using gadgets), the direct binary analysis seems to be the only viable option.  Also, often times it is not desirable to add the compiler in the trusted base because, due to presence of compiler bugs or some aggressive optimization that compiler does in the presence of undefined behaviour, there might not be any guarantee that the analysis results that we gather at the source level  can be applied faithfully to the binary code.  
+x86-64 being one of the most complex ISAs and widely used in servers and desktop, ensuring the correctness of the program written in binary is extremely important. A formal semantics of x86-64 is imperative for formal reasoning about binary code which is  one of the strongest ways to ensure it's correctness. A formal semantic of the ISA allows direct reasoning about the binary code which is at times more desirable than the source level analysis. For example, in case of legacy software, when the source code is missing, or malware analysis (e.g. finding CFI attacks using gadgets), the direct binary analysis seems to be the only viable option.  Also, often times it is not desirable to add the compiler in the trusted base due to presence of compiler bugs or some aggressive optimization that compiler does in the presence of undefined behaviour. As a result, there might not be any guarantee that the analysis results that we gather at the source level  can be applied faithfully to the binary code.  
 
 Completely formalizing the semantics of x86-64, however, is extremely challenging especially due to the complexity and the sheer number of instructions that are informally specified, using a mixture of prose and pseudocode, in thousands of pages in the \emph{Intel reference manual}. 
 %%
-Despite the challenges, we witnessed the heroic effort~\cite{Dasgupta:2019} in formalizing the semantics of most of the user-level instruction using language semantic engineering framework \K. However, the developed semantics is for the assembly language notation of the binary program and hence limited in the sense that any binary analysis using that formalism require, as a prerequisite, converting the binary to the supported mnemonic notation using an off-the-shelf disassembler. Such a requirement add the disassembler in the trusted computing base. Through the presented work, we eliminated the limitation by formally specifying an instruction decoder and thereby allowing~\cite{Dasgupta:2019} to work directly on binary code.
+Despite the challenges, we witnessed the heroic effort~\cite{Dasgupta:2019} in formalizing the semantics of most of the user-level instruction using language semantic engineering framework \K. However, the developed semantics is for the assembly language notation of the binary program and hence limited in the sense that any binary analysis using that formalism require, as a prerequisite, converting the binary to the supported mnemonic notation using an off-the-shelf disassembler. Such a requirement include the disassembler in the trusted computing base. Through the presented work, we eliminated the limitation by formally specifying an instruction decoder and thereby allowing~\cite{Dasgupta:2019} to work directly on binary code.
 
 \input{decoder}
 
