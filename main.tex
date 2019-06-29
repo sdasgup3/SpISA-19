@@ -15,21 +15,45 @@
 
 \title{Formalizing \ISA Instruction Decoder in \K} %TODO Please add
 
-\titlerunning{x86-64 ISA semantics}%optional, please use if title is longer than one line
+%\titlerunning{x86-64 ISA semantics}%optional, please use if title is longer than one line
 
 %\author{Sandeep Dasgupta}{University of Illinois at Urbana Champaign, USA \and \url{http://sdasgup3.web.engr.illinois.edu}}{sdasgup3@illinois.edu}{https://orcid.org/0000-0002-6483-2055}%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional
 
 %\author{Sandeep Dasgupta}{University of Illinois at Urbana Champaign, USA \and \url{http://sdasgup3.web.engr.illinois.edu} }{sdasgup3@illinois.edu}{https://orcid.org/0000-0002-6483-2055}{}
-\author{Sandeep Dasgupta}{University of Illinois at Urbana Champaign, USA \and \url{http://sdasgup3.web.engr.illinois.edu} }{sdasgup3@illinois.edu}{}{}
 \author{Andrew H. Miranti}{University of Illinois at Urbana Champaign, USA}{miranti2@illinois.edu}{}{}
+\author{Sandeep Dasgupta}{University of Illinois at Urbana Champaign, USA \and \url{http://sdasgup3.web.engr.illinois.edu} }{sdasgup3@illinois.edu}{}{}
+
 
 
 \authorrunning{S. Dasgupta and A.H. Miranti}%TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
 
-\Copyright{Sandeep Dasgupta and Andrew H. Miranti}%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+\Copyright{Andrew H. Miranti and Sandeep Dasgupta}%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
-\ccsdesc[100]{General and reference~General literature}
-\ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+%\ccsdesc[100]{General and reference~General literature}
+%\ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+\begin{CCSXML}
+    <ccs2012>
+    <concept>
+    <concept_id>10003752.10010124.10010138</concept_id>
+    <concept_desc>Theory of computation~Program reasoning</concept_desc>
+    <concept_significance>500</concept_significance>
+    </concept>
+    <concept>
+    <concept_id>10010583.10010717.10010721.10010725</concept_id>
+    <concept_desc>Hardware~Simulation and emulation</concept_desc>
+    <concept_significance>500</concept_significance>
+    </concept>
+    <concept>
+    <concept_id>10011007.10011006.10011039</concept_id>
+    <concept_desc>Software and its engineering~Formal language definitions</concept_desc>
+    <concept_significance>500</concept_significance>
+    </concept>
+    </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Program reasoning}
+\ccsdesc[500]{Hardware~Simulation and emulation}
+\ccsdesc[500]{Software and its engineering~Formal language definitions}
 
 \keywords{\ISA, ISA specification, Formal Semantics}%TODO mandatory; please add comma-separated list of keywords
 
@@ -46,7 +70,7 @@
 
 %\nolinenumbers %uncomment to disable line numbering
 
-%\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
 
 %Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \EventEditors{John Q. Open and Joan R. Access}
