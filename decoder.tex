@@ -7,7 +7,12 @@ Two basic approaches to applying binaries to the existing x86 semantics present 
 \begin{enumerate}
     \item Linear sweep: Starting from the beginning of the text segment, disassemble instructions sequentially over the entire program.  This approach is the simplest, but breaks if it starts at an incorrect offset, or unexpected data appears in the text segment of the program.
     \item Recursive descent: Starting at a known address (e.g. the program entry), decode sequentially until a branch is detected, in which case spawn another thread which decodes the target.
-    \item Probabilistic~\cite{Miller:2019}: Use features of real chains of instructions (such as a register write followed by a read to the same register) to determine whether a given byte is likely part of an instruction and, if so, at what offset that instruction is most likely to begin.
+    \item Probabilistic~\cite{Miller:2019}: Use semantic features (for example, register use-def chains and control transfer targets), that only a real code body would likely demonstrate, as hints to discover correlations between code bytes (or true instructions) and use those hints to determine  
+    whether a given byte is likely part of an instruction and, if so, at what offset that instruction is most likely to begin.
+    
+    
+    %of real chains of instructions (
+    %such as a register write followed by a read to the same register) to determine whether a given byte is likely part of an instruction and, if so, at what offset that instruction is most likely to begin.
 \end{enumerate}
 
 However, each of these algorithms share a common flaw: they cannot offer any formal certainty that the decoded program is actually the one that would run if the binary were executed, and thus any property proved from that program must be met with some skepticism.  As an example of why, consider the target of an indirect jump (of the form \instr{jmp \%rax}) – where the target is computed by an arbitrary function.  Determining the value of that function’s return can be arbitrarily complex, up to undecidable.  Thus, the location of program flow is, in the general case, undecidable.  Even if no deliberate example of an indirect jump to a computed location exists, one can still occur through a programming error such as a buffer overflow.  Few, if any, real world x86 programs lack any indirect jumps, as \instr{ret} performs one.  Thus, any attempt to prove a property over a disassembled binary must solve this problem.  Hence, the need for a formalized decoder.
