@@ -13,7 +13,7 @@
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 
-\title{Formalizing \ISA Instruction Decoder in \K} %TODO Please add
+\title{Towards Formalizing the \ISA Instruction Decoder in \K} %TODO Please add
 
 %\titlerunning{x86-64 ISA semantics}%optional, please use if title is longer than one line
 
@@ -22,13 +22,12 @@
 %\author{Sandeep Dasgupta}{University of Illinois at Urbana Champaign, USA \and \url{http://sdasgup3.web.engr.illinois.edu} }{sdasgup3@illinois.edu}{https://orcid.org/0000-0002-6483-2055}{}
 
 \author{Andrew H. Miranti}{University of Illinois at Urbana Champaign, USA}{miranti2@illinois.edu}{}{}
-\author{Sandeep Dasgupta}{University of Illinois at Urbana Champaign, USA}{sdasgup3@illinois.edu}{}{}
-%\author{Grigore Ro\c{s}u}{University of Illinois at Urbana Champaign, USA}{grosu@illinois.edu}{}{}
+\author{Sandeep Dasgupta}{University of Illinois at Urbana Champaign, USA }{sdasgup3@illinois.edu}{}{}
+\author{Grigore Ro\c{s}u}{University of Illinois at Urbana Champaign, USA}{grosu@illinois.edu}{}{}
 
+\authorrunning{A. H. Miranti, S. Dasgupta and G. Ro\c{s}u}%TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
 
-\authorrunning{S. Dasgupta and A.H. Miranti}%TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
-
-\Copyright{Andrew H. Miranti and Sandeep Dasgupta}%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+\Copyright{Andrew H. Miranti, Sandeep Dasgupta and Grigore Ro\c{s}u}%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
 
 %\ccsdesc[100]{General and reference~General literature}
 %\ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
@@ -69,7 +68,7 @@
 
 %\acknowledgements{I want to thank \dots}%optional
 
-%\nolinenumbers %uncomment to disable line numbering
+\nolinenumbers %uncomment to disable line numbering
 
 \hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
 
@@ -97,7 +96,7 @@
 \begin{abstract}
     The \ISA instruction set architecture being one of the
     most complex and widely used ISAs,  ensuring the correctness of the x86-64 binary code is
-    important. One of the strongest ways to ensure that is to define a  formal semantics of \ISA language. In this work, we present the ongoing work in augmenting the capability of an existing \ISA formal semantics, with the most complete user-level instruction support, by formalizing the instruction decoder and thereby allowing direct analysis of binary code.
+    important. One of the strongest ways to ensure that is to define a  formal semantics of the \ISA language. We present ongoing work in augmenting the capability of an existing \ISA formal semantics, with the most complete user-level instruction support, by formalizing the instruction decoder and thereby allowing direct analysis of binary code.
      %Completely formalizing
     %the semantics of x86-64, however, is extremely challenging
     %especially due to the complexity and the sheer number of
@@ -110,11 +109,42 @@
 
 \section{Introduction}
 \label{sec:intro}
-x86-64 being one of the most complex ISAs and widely used in servers and desktop, ensuring the correctness of the program written in binary is extremely important. A formal semantics of x86-64 is imperative for formal reasoning about binary code which is  one of the strongest ways to ensure it's correctness. A formal semantic of the ISA allows direct reasoning about the binary code which is at times more desirable than the source level analysis. For example, in case of legacy software, when the source code is missing, or malware analysis (e.g. finding CFI attacks using gadgets), the direct binary analysis seems to be the only viable option.  Also, often times it is not desirable to add the compiler in the trusted base due to presence of compiler bugs or some aggressive optimization that compiler does in the presence of undefined behaviour. As a result, there might not be any guarantee that the analysis results that we gather at the source level  can be applied faithfully to the binary code.  
+x86-64 being one of the most complex ISAs and widely used in servers and
+desktop, ensuring the correctness of the program written in binary is extremely
+important. A formal semantics of x86-64 is imperative for formal reasoning
+about binary code, which is  one of the strongest ways to ensure
+correctness. A formal semantics of the ISA allows direct reasoning about the
+binary code, which is desirable, not only because it allows to analyze the
+binary even when the source code is not available (e.g., legacy code or
+    malware), but also because it avoids the need to trust the correctness of
+compilers.
 
-Completely formalizing the semantics of x86-64, however, is extremely challenging especially due to the complexity and the sheer number of instructions that are informally specified, using a mixture of prose and pseudocode, in thousands of pages in the \emph{Intel reference manual}. 
-%%
-Despite the challenges, we witnessed the heroic effort~\cite{Dasgupta:2019} in formalizing the semantics of most of the user-level instruction using language semantic engineering framework \K. However, the developed semantics is for the assembly language notation of the binary program and hence limited in the sense that any binary analysis using that formalism require, as a prerequisite, converting the binary to the supported mnemonic notation using an off-the-shelf disassembler. Such a requirement include the disassembler in the trusted computing base. Through the presented work, we eliminated the limitation by formally specifying an instruction decoder and thereby allowing~\cite{Dasgupta:2019} to work directly on binary code.
+%preferred over source level analysis in scenarioes like legacy software with
+%missing source code or maware analysis.  at times more desirable than the
+%source level analysis. For example, in case of legacy software, when the
+%source code is missing, or malware analysis.  Also, often times it is not
+%desirable to add the compiler in the trusted base due to presence of compiler
+%bugs or some aggressive optimization that compiler does in the presence of
+%undefined behaviour. As a result, there might not be any guarantee that the
+%analysis results that we gather at the source level  can be applied faithfully
+%to the binary code.  
+%
+
+Completely formalizing the semantics of the \ISA ISA, however, is extremely
+challenging especially due to the complexity and the large number of
+instructions that are informally specified in the reference manual~\cite{IntelManual}.
+%, using a mixture of prose and pseudocode, in thousands of pages in the
+%\emph{Intel reference manual}.  %
+Despite the challenges, we witnessed the heroic effort~\cite{Dasgupta:2019} in
+formalizing the semantics of most of the user-level instructions using the language
+semantics engineering framework \K. However, the developed semantics is for the
+assembly language notation of the binary program and hence limited in the sense
+that any binary analysis using that formalism requires, as a prerequisite,
+     converting the binary to the supported mnemonic notation using an
+     off-the-shelf disassembler. Such a requirement includes the disassembler in
+     the trusted computing base. Through the present work, we eliminate the
+     limitation by formally specifying an instruction decoder and thereby
+     allowing~\cite{Dasgupta:2019} to work directly on binary code. Also, our work is publicly available~\cite{x86-64-decoder-github}.
 
 \input{decoder}
 
